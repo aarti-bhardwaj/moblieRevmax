@@ -53,6 +53,9 @@
                     <!-- Add $ {{upsell.price}} ({{upsell.name}})  -->
                     {{ checkUpsell[upsell.id] ? 'Added $'+upsell.price+'('+upsell.name+')' : 'Add $'+upsell.price+'('+upsell.name+')'}}
                   </button>
+                  <button style="white-space: normal" *ngIf="checkUpsell" (click)="removeProduct($event.target, upsell)">
+                    <ion-icon name="md-add"></ion-icon>
+                  </button>
                 </ion-item>                
               </ion-list>
           </ion-grid>
@@ -155,8 +158,38 @@
             </ion-card>  
           </ion-list>
           <ion-list *ngSwitchCase="'review'"> 
-            <h3>Review</h3>         
-            </ion-list>
+
+            <ng-container *ngIf="product.product_reviews">
+              <ion-card *ngFor="let att of product.product_reviews">
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col col-6>
+                        <!-- <ion-thumbnail>
+                          <img src="img/avatar-cher.png">
+                        </ion-thumbnail> -->
+                        <p [innerHTML]="att.user_image"></p>
+                      </ion-col>
+                      <ion-col col-6>
+                        {{att.comment_author}}
+                        <ion-row>
+                          <ion-col col-12>
+                            <p>{{att.comment_content}}</p>
+                          </ion-col>
+                          <!-- <ion-col col-12>
+                            <button ion-button color="#E2E0DF" [disabled]="checkUpsells[productOne.id]" center bottom (click)="addCart(productOne)">{{ checkUpsells [productOne.id] ? 'ADDED TO CART' : 'ADD TO CART'}}
+                            </button>
+                          </ion-col> -->
+                        </ion-row>
+                      </ion-col>
+            
+                    </ion-row>
+                  </ion-grid>
+                </ion-card-content>
+              </ion-card>
+            </ng-container>
+
+          </ion-list>
         </div> <!-- Tabs end here -->
     <!-- </ion-card> -->
 </ion-content>

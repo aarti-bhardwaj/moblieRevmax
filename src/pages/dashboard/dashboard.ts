@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RevmaxProvider as Revmax } from '../../providers/revmax';
+import { AppConfigurationProvider as AppConfig } from '../../providers/configuration/app-configuration';
 
 
 
@@ -28,9 +29,11 @@ export class DashboardPage {
   response: any;
   product: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public Revmax: Revmax,          
+  constructor(public navCtrl: NavController, public navParams: NavParams, public Revmax: Revmax, 
+    private appConfig: AppConfig,         
     ) {
     this.dashboard();
+    this.fetchCart();
   }
 
   dashboard(){
@@ -50,6 +53,20 @@ export class DashboardPage {
     });
   }
   
+  fetchCart(){
+    this.appConfig.fetchCartItems()
+      .subscribe((response) => {
+        
+        console.log('success in getting cart items');
+        console.log(response);
+      },
+      (error) => {
+        console.log('in error');
+        console.log('error in getting cart items');
+        console.log(error);
+
+      });
+  }
   
 
 }

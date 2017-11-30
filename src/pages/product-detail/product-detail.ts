@@ -79,7 +79,7 @@ export class ProductDetailPage {
         console.log('in subs of product detail');      
         this.product = val.productInfo; 
         // console.log(this.product.data);
-        this.instalationIns = this.product.installation_instruction;   
+        // this.instalationIns = this.product.installation_instruction;   
         this.header =  'description'; 
         this.productName = this.product.slug;
         this.title = this.product.categories[0].name;
@@ -123,9 +123,10 @@ export class ProductDetailPage {
             {
               text: 'Show me the upgrades',
               handler: () => {
-                this.modalCtrl.create('upgrade-products', {
-                  'upsellIds':this.product.upsell_ids
-                }).present();
+                // this.modalCtrl.create('upgrade-products', {
+                //   'upsellIds':this.product.upsell_ids
+                // }).present();
+                this.upgradeProduct();
                 console.log('show upgrades');
               }
             },
@@ -161,9 +162,10 @@ export class ProductDetailPage {
             {
               text: 'Show me the upgrades',
               handler: () => {
-                this.modalCtrl.create('upgrade-products', {
-                  'upsellIds':this.product.upsell_ids
-                }).present();
+                // this.modalCtrl.create('upgrade-products', {
+                //   'upsellIds':this.product.upsell_ids
+                // }).present();
+                this.upgradeProduct();
                 console.log('show upgrades');
               }
             },
@@ -231,33 +233,41 @@ export class ProductDetailPage {
       if (data == null || data.length == 0) {
         data = [];
         data.push({
-          "product": product,
+          // "product": product,
+          "name": product.name,
           "quantity": 1,
-          "amount": parseFloat(this.product.price),
+          "image": product.images[0],
+          "price": parseFloat(product.price),
+          "amount": parseFloat(product.price),
           "product_id": product.id,
           "variation_id": this.variationId ? this.variationId: "" ,
           "variation": this.variationsData ? this.variable : "",
+          "forcell_products": product.force_sell_product_info
         })
       } else {
         let added = 0;
           for (let i = 0; i < data.length; i++) {
-            if (product.id == data[i].product.id) {
+            if (product.id == data[i].product_id) {
               let quantity = data[i].quantity;
               console.log("Product is already in the cart");
               data[i].quantity = quantity + 1;
-              data[i].amount = parseFloat(data[i].amount) + parseFloat(this.product.price);
+              data[i].amount = parseFloat(data[i].amount) + parseFloat(product.price);
               added = 1;
             }
           }
 
         if (added == 0) {
           data.push({
-            "product": product,
+            // "product": product,
+            "name": product.name,
             "quantity": 1,
-            "amount": parseFloat(this.product.price),
+            "image": product.images[0],
+            "price": parseFloat(product.price),
+            "amount": parseFloat(product.price),
             "product_id": product.id,
             "variation_id": this.variationId ? this.variationId: "" ,
             "variation": this.variationsData ? this.variable: "",
+            "forcell_products": product.force_sell_product_info
           })
         }
     }
@@ -273,8 +283,11 @@ export class ProductDetailPage {
         if(this.selectedUpsellProducts.length > 0) {
         this.selectedUpsellProducts.forEach( (upsell, index)=> {
           data.push({
-                  "product": upsell,
+                  // "product": upsell,
+                  "name": upsell.name,
                   "quantity": 1,
+                  "image": product.images[0],
+                  "price": parseFloat(upsell.price),
                   "amount": parseFloat(upsell.price),
                   "product_id": upsell.id,
                 })
@@ -352,6 +365,16 @@ export class ProductDetailPage {
     this.checkUpsell[product.id] = true;
     console.log('Array of upsell products');
     console.log(this.selectedUpsellProducts);
+  }
+
+  /* Remove upsell product from the selectedUpsellProducts array */
+  removeProduct(element, product){
+    element.disable = false;
+    this.selectedUpsellProducts.splice(product);
+    this.checkUpsell[product.id] = false;
+    console.log("removed array");
+    console.log(this.selectedUpsellProducts);
+
   }
 
 }

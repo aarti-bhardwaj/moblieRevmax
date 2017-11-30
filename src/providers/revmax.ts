@@ -38,7 +38,7 @@ export class RevmaxProvider {
       return false;
     }
     console.log('In category products');
-    return this.woo.fetchItems('products?category='+catId)
+    return this.woo.fetchItems('products?category=' + catId + '&per_page=100')
         .then((products) => {
           console.log(products);
           this.products.productCategory = products;

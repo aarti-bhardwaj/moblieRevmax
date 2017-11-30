@@ -54,6 +54,8 @@ export class MyApp {
       console.log(error);
     });
   }
+
+
   getPageComponent(pageTitle){
     var componentName:string= null;
     switch(pageTitle){
