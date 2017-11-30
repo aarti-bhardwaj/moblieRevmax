@@ -126,6 +126,24 @@ export class AppConfigurationProvider {
     // http://revmax.twinspark.co/wp-json/cart/v1/cart-items
   }
 
+  /* Post Reviews of products */
+
+  postReviews(requestData, productId) {
+    let body = new URLSearchParams();
+    body.set('comment_post_ID', productId);
+    body.set('comment_author', requestData.userName);
+    body.set('comment_author_email', requestData.userEmail);
+    body.set('comment_content', requestData.userContent);
+    
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('Accept', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    let url = this.wordpressStagingUrl + "/wp-json/review/v1/product-review";
+    return this.customhttp.post(url, body.toString().replace(/ /g, ''), options)
+      .map((response) => response.json());
+  }
+
 
   }
  

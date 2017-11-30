@@ -7,11 +7,14 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { FormsModule } from '@angular/forms';
 // import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { RevmaxProvider } from '../providers/revmax';
 import { WooApiModule } from 'ng2woo';
 import { IonicStorageModule } from '@ionic/storage';
+
+import { Ionic2RatingModule } from 'ionic2-rating';
 
 // import { VideoPlayer } from '@ionic-native/video-player';
 const WooCommerceConfig = {
@@ -32,7 +35,9 @@ const WooCommerceConfig = {
     IonicModule.forRoot(MyApp),
     HttpModule,
     WooApiModule.forRoot(WooCommerceConfig),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    Ionic2RatingModule,
+    FormsModule, // Put ionic2-rating module here
   ],
   // schemas: [
   //   CUSTOM_ELEMENTS_SCHEMA

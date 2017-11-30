@@ -78,9 +78,9 @@
                     </ion-thumbnail>
                   </ion-col>
                   <ion-col text-wrap col-8>
-                    <h2 style="color:red">{{ item.forcell_products.product_name ? item.forcell_products.product_name : item.forcell_products.product_data.post_title }}</h2>
+                    <h2 style="color:red">{{ item.forcell_products.product_name ? item.forcell_products.product_name : item.forcell_products.data.post_title }}</h2>
                     <p style= "margin-top: 16px">Quantity : {{item.quantity}}</p><br>
-                    <!-- <p>$ {{item.forcell_products.product_price * item.quantity }}</p> -->
+                    <p>$ {{item.forcell_products.product_price ? item.forcell_products.product_price * item.quantity : item.forcell_products.line_subtotal * item.quantity}}</p>
                   </ion-col>
                 </ion-row>
               </ion-grid>

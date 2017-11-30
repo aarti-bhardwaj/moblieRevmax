@@ -4,16 +4,6 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<!-- <ion-header>
-    <ion-navbar hideBackButton="false">
-        <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-      <ion-title>
-        {{title}}
-      </ion-title>
-    </ion-navbar>
-  </ion-header> -->
   <ion-header>
     
       <ion-navbar >
@@ -27,9 +17,6 @@
 
 
 <ion-content scroll="false" has-header="true" padding="true" *ngIf="product">
-<!-- <ion-fab style="top: 5px;" right top edge (click)="openCart()">
-  <button style="width: 40px; height:40px" ion-fab color="danger"><ion-icon name="cart"></ion-icon></button>
-</ion-fab> -->
     <ion-card>
       <ion-slides autoplay="4000" loop="true">
           <ion-slide *ngFor="let image of product.images">
@@ -65,20 +52,6 @@
     <!-- <button ion-button icon-only (click)="installationInstructions()">
         <ion-icon name="book"></ion-icon>
       </button> -->
-
-      
-          <!-- <iframe src="http://wallpaperswide.com/railway-wallpapers.html"></iframe> -->
-       
-            <!-- <ion-row *ngFor="let att of product.attributes let i = index">
-              <ion-col col-4 *ngIf="att.variation == true" >
-                {{ att.name}}
-              </ion-col>
-              <ion-col col-8 *ngIf="att.variation == true">
-                <ion-select [(ngModel)]="variationsData[att.name]" multiple="false" (ngModelChange)="getProductVariations()">
-                  <ion-option *ngFor="let option of att.options" value="{{option}}">{{option}}</ion-option>
-                </ion-select>
-              </ion-col>
-            </ion-row> -->
         <ion-card>
           <ng-container *ngFor="let att of product.attributes let i = index">
             <ion-item *ngIf="att.variation == true">
@@ -164,22 +137,27 @@
                 <ion-card-content>
                   <ion-grid>
                     <ion-row>
-                      <ion-col col-6>
+                      <ion-col col-4>
                         <!-- <ion-thumbnail>
                           <img src="img/avatar-cher.png">
                         </ion-thumbnail> -->
                         <p [innerHTML]="att.user_image"></p>
                       </ion-col>
-                      <ion-col col-6>
+                      <ion-col col-8>
                         {{att.comment_author}}
                         <ion-row>
                           <ion-col col-12>
                             <p>{{att.comment_content}}</p>
                           </ion-col>
-                          <!-- <ion-col col-12>
-                            <button ion-button color="#E2E0DF" [disabled]="checkUpsells[productOne.id]" center bottom (click)="addCart(productOne)">{{ checkUpsells [productOne.id] ? 'ADDED TO CART' : 'ADD TO CART'}}
-                            </button>
-                          </ion-col> -->
+                          <ion-col col-12>
+                            <rating [(ngModel)]="att.comment_rating" readOnly="true"
+                              max="5" 
+                              emptyStarIconName="star-outline"                             
+                              halfStarIconName="star-half"                             
+                              starIconName="star"                              
+                              nullable="false">
+                            </rating>
+                          </ion-col>
                         </ion-row>
                       </ion-col>
             
@@ -187,6 +165,34 @@
                   </ion-grid>
                 </ion-card-content>
               </ion-card>
+            </ng-container>
+            <ng-container>
+              <form #changeForm="ngForm" (ngSubmit)="postReviewsApp()">
+                <ion-list inset>
+                  <ion-item>
+                    <ion-label stacked color="primary" for="userName">
+                      Name
+                    </ion-label>
+                    <ion-input required  placeholder="Name" [(ngModel)]="postReviewData.userName" name="userName"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked color="primary" for="userEmail">
+                      Email
+                    </ion-label>
+                    <ion-input required placeholder="Email" [(ngModel)]="postReviewData.userEmail" name="userEmail"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked color="primary" for="userContent">
+                      Comment
+                    </ion-label>
+                    <ion-input required  [(ngModel)]="postReviewData.userContent" name="userContent"></ion-input>
+                  </ion-item>
+              
+                  <ion-item>
+                    <button ion-button type="submit" color="primary" block [disabled]="!changeForm.form.valid">Submit</button>
+                  </ion-item>
+                </ion-list>
+              </form>
             </ng-container>
 
           </ion-list>

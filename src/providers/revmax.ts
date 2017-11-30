@@ -143,35 +143,6 @@ export class RevmaxProvider {
         .catch(error => console.log(error));
     }
 
-    /* result for search attributes*/
-  // searchResult(catId, searchArray) {
-  //   let url = 'products?category=' + catId;
-
-  //   var search = '';
-  //   if(searchArray.length != 0){
-  //     searchArray.forEach(element => {
-  //       search = search + ',' + element.replace(/ /g, '');
-  //       // url = url + '&search=' + element;  
-  //     });
-  //   }
-  //   url = url + '&search=' + search;
-  //   console.log(url);
-  //   this.woo.fetchItems(url)
-  //     // this.woo.fetchItems('products/categories?per_page=30')
-  //     .then(products => {
-  //       console.log(products);
-  //       this.products.searchResult = products;
-  //       console.log("this is the final search result");
-  //       console.log(this.products.searchResult);
-  //       this.gotData();
-  //       // if (this.products.searchResult.length>0 ){
-  //       // }
-  //     }
-  //     )
-  //     .catch(error => console.log(error));
-  // }
-
-
   
 
 }

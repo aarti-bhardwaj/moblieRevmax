@@ -25,9 +25,14 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'product-detail.html',
 })
 export class ProductDetailPage {
+  public postReviewData: any = {
+    "userName": "",
+    "userEmail" : "",
+    "userContent" : ""};
   variable: any;
   title: any;
   name: any;
+
   showUpgradeButton: boolean;
   isVariation: boolean;
   variationLength: number;
@@ -54,6 +59,7 @@ export class ProductDetailPage {
      private appConfig: AppConfig,
      public alertCtrl: AlertController
     ) {
+     
     this.productId = this.navParams.get("id");
     // this.productCat = this.navParams.get("productCat");
     console.log('In product detail params');
@@ -375,6 +381,32 @@ export class ProductDetailPage {
     console.log("removed array");
     console.log(this.selectedUpsellProducts);
 
+  }
+
+  postReviewsApp() {
+    this.appConfig.postReviews(this.postReviewData, this.productId)
+      .subscribe((response) => {
+        console.log('success in posting');
+        console.log(response);
+        const alert = this.alertCtrl.create({
+          title: 'Success',
+          subTitle: response,
+          buttons: ['Ok']
+        });
+        alert.present();
+      },
+      (error) => {
+        console.log('in error');
+        console.log('error in pposting');
+        console.log(error);
+        const alert = this.alertCtrl.create({
+          title: 'Error',
+          subTitle: "Not able to post. Try next time",
+          buttons: ['Ok']
+        });
+        alert.present();
+
+      });
   }
 
 }

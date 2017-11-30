@@ -23,6 +23,9 @@ import { AppConfigurationProvider as AppConfig } from '../../providers/configura
   templateUrl: 'dashboard.html',
 })
 export class DashboardPage {
+  data(arg0: any): any {
+    throw new Error("Method not implemented.");
+  }
   searchCat: any;
   products: any;
   pages: any;
@@ -33,7 +36,7 @@ export class DashboardPage {
     private appConfig: AppConfig,         
     ) {
     this.dashboard();
-    this.fetchCart();
+    // this.fetchCart();
   }
 
   dashboard(){
