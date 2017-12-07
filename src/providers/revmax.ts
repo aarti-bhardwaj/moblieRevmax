@@ -50,6 +50,8 @@ export class RevmaxProvider {
 
   /* Subject to return the category product.*/
   gotData(){
+    console.log('checking product infor');
+    console.log(this.products);
     this.getDataSubject.next(this.products);
   }
 

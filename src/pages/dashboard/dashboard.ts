@@ -36,7 +36,7 @@ export class DashboardPage {
     private appConfig: AppConfig,         
     ) {
     this.dashboard();
-    // this.fetchCart();
+    this.fetchCart();
   }
 
   dashboard(){

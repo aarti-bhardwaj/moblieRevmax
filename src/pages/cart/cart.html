@@ -122,12 +122,12 @@
               <button ion-button color="danger" outline block (click)="closeModal()">Back</button>
             </ion-col>
             <ion-col>
-              <!-- <div (mouseover)= "checkout()"> -->
-                <form ngNoForm (submit)="checkout($event)" action=" http://revmax.twinspark.co/add-product/" target="_blank" method="POST">
+              <div (mouseover)= "checkout()">
+                <form ngNoForm (submit)="formSubmit($event)" action=" http://revmax.twinspark.co/add-product/" target="_self" method="POST">
                   <input type= "hidden" name="q" [(ngModel)]="cartString" value="cartString">
-                  <button id="formCartSubmit" ion-button color="danger" block>Checkout</button>
+                  <button id="formCartSubmit" [disabled]="!cartString" ion-button color="danger" block>Checkout</button>
                 </form>
-              <!-- </div> -->
+              </div>
             </ion-col>
             <!-- <form ngNoForm action=" http://revmax.twinspark.co/add-product/" target="_blank" method="POST">
               <input name="q" [(ngModel)]="cartString" value="cartString">

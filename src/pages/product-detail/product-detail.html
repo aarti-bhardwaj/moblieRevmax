@@ -167,7 +167,7 @@
               </ion-card>
             </ng-container>
             <ng-container>
-              <form #changeForm="ngForm" (ngSubmit)="postReviewsApp()">
+              <form #changeForm="ngForm" (ngSubmit)="postReviewsApp(); changeForm.reset()">
                 <ion-list inset>
                   <ion-item>
                     <ion-label stacked color="primary" for="userName">
@@ -179,7 +179,7 @@
                     <ion-label stacked color="primary" for="userEmail">
                       Email
                     </ion-label>
-                    <ion-input required placeholder="Email" [(ngModel)]="postReviewData.userEmail" name="userEmail"></ion-input>
+                    <ion-input required type="email" placeholder="Email" [(ngModel)]="postReviewData.userEmail" name="userEmail"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked color="primary" for="userContent">

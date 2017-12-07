@@ -82,12 +82,21 @@ export class ProductDetailPage {
     else{
       console.log('in else');
       this.Revmax.getDataSubject.subscribe((val)=>{
-        console.log('in subs of product detail');      
+        console.log('in subs of product detail');  
+        this.loader.dismiss();     
         this.product = val.productInfo; 
-        // console.log(this.product.data);
+        if(!this.product){
+          this.product = this.Revmax.products.productInfo;
+          if (!this.product){
+            this.navCtrl.setRoot('dashboard');
+          }
+          
+        }
+        console.log(this.product);
         // this.instalationIns = this.product.installation_instruction;   
         this.header =  'description'; 
         this.productName = this.product.slug;
+        console.log(this.productName);
         this.title = this.product.categories[0].name;
         
 
@@ -105,7 +114,7 @@ export class ProductDetailPage {
           console.log(this.showUpgradeButton);
           console.log(this.product.upsell_ids);
         }
-        this.loader.dismiss(); 
+        
       });
     }
   }

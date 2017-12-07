@@ -12,12 +12,72 @@ import { Storage } from '@ionic/storage';
 */
 @Injectable()
 export class AppConfigurationProvider {
+  getCartItems: any;
+  total: any;
   //Enviornment variables
   wordpressStagingUrl:string="https://revmax.twinspark.co";
   // wordpressLiveUrl:string="http://revmax.twinspark.co";
   
-  constructor(  public http: CustomHttpProvider, private customhttp: Http, public storage: Storage) {
-    
+  constructor(public http: CustomHttpProvider, private customhttp: Http, public storage: Storage) {
+    this.fetchCartItems()
+      .subscribe((response) => {
+
+        console.log('success in getting cart items');
+        console.log(response);
+        console.log(typeof response);
+
+        this.getCartItems = response;
+        if (this.getCartItems) {
+          this.storage.get("cart").then((data) => {
+            console.log(data);
+            this.total = 0.0;
+            // if (data == null || data.length == 0) {
+            console.log("when data is null");
+            console.log(this.getCartItems);
+            var item;
+            data = [];
+
+            for (item in this.getCartItems) {
+              console.log("pront id");
+              console.log("this is the cart item");
+              console.log(item);
+              console.log(this.getCartItems[item].product_id);
+
+              if (!this.getCartItems[item].forced_by) {
+
+                data.push({
+                  // "product": product,
+                  "name": this.getCartItems[item].product_data.post_title,
+                  "quantity": this.getCartItems[item].quantity,
+                  "image": this.getCartItems[item].guid,
+                  "price": this.getCartItems[item].line_total,
+                  "amount": parseFloat(this.getCartItems[item].line_total) * this.getCartItems[item].quantity,
+                  "product_id": this.getCartItems[item].product_data.ID,
+                  "variation_id": "",
+                  "variation": "",
+                  "forcell_products": this.getCartItems[item].forced_product
+                })
+
+              }
+            }
+            // }
+            this.storage.set("cart", data).then(() => {
+              console.log("Cart Updated");
+              this.storage.get("cart").then((data) => {
+                console.log(data);
+              })
+
+            })
+          })
+        }
+
+      },
+      (error) => {
+        console.log('in error');
+        console.log('error in getting cart items');
+        console.log(error);
+
+      });
   }
   
   fetchMenuItems(){
@@ -118,10 +178,13 @@ export class AppConfigurationProvider {
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
     let options = new RequestOptions({ headers: headers });
-    let url = this.wordpressStagingUrl + '/wp-json/cart/v1/cart-items';
+    let timeStamp = +new Date();
+    
+    let url = this.wordpressStagingUrl + '/wp-json/cart/v1/cart-items?tsp=' + timeStamp;
 
+    
     return this.customhttp.get(url, options)
-      .map((response) => console.log(response));
+      .map((response) => response.json());
 
     // http://revmax.twinspark.co/wp-json/cart/v1/cart-items
   }
@@ -144,6 +207,14 @@ export class AppConfigurationProvider {
       .map((response) => response.json());
   }
 
+  /* Empty cart */
+
+  emptyCart() {
+    return this.http.get(this.wordpressStagingUrl + '/cart/?empty-cart=true')
+      .map((response) => response.json());
+  }
+
+  // http://revmax.twinspark.co/cart/?empty-cart=true
 
   }
  
