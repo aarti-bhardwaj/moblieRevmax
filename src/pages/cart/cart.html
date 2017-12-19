@@ -19,7 +19,7 @@
             <ion-col>Your Cart Description</ion-col>
           </ion-row>
           <ion-row [hidden]="!showEmptyCartMessage">
-            <ion-col>There are no products in your cart!</ion-col>
+            <ion-col>Your cart is currently empty.</ion-col>
           </ion-row>
         </ion-grid>
       </ion-card>
@@ -32,7 +32,7 @@
               <ion-row>
                 <ion-col col-4>
                   <ion-thumbnail item-left>
-                    <img [src]="item.image ? item.image.src : item.image" style="width: 80px !important; height: 80px !important;"/>
+                    <img [src]="item.image ? item.image : ''" style="width: 80px !important; height: 80px !important;"/>
                   </ion-thumbnail>
                 </ion-col>
                 <ion-col text-wrap col-8>
@@ -40,7 +40,7 @@
                   
                   <ion-row>
                     <ion-col col-4>
-                      <p style= "margin-top: 16px">Quantity : </p>
+                      <p style= "margin-top: 16px">Quantity</p>
                     </ion-col>
                     <ion-col col-4>
                       <ion-item>
@@ -56,7 +56,7 @@
                       <button ion-button color="primary" block (click)= "addQuantity(item,'sub')">-</button>
                     </ion-col>
                   </ion-row>
-                  <p>$ {{item.quantity * item.price }}</p>
+                  <p>${{item.quantity * item.price }}</p>
                   <br>
                   <p style="color:blue " tappable (click)="removeFromCart(item, i)">Remove</p>
                   <!-- <ion-label tappable (click)="removeFromCart(item, i)" color="primary">Remove</ion-label> -->
@@ -74,13 +74,13 @@
                 <ion-row>
                   <ion-col col-4>
                     <ion-thumbnail item-left>
-                      <img [src]="item.forcell_products.product_image ? item.forcell_products.product_image : item.forcell_products.guid" style="width: 80px !important; height: 80px !important;"/>
+                      <img [src]="item.forcell_products.product_image" style="width: 80px !important; height: 80px !important;"/>
                     </ion-thumbnail>
                   </ion-col>
                   <ion-col text-wrap col-8>
-                    <h2 style="color:red">{{ item.forcell_products.product_name ? item.forcell_products.product_name : item.forcell_products.data.post_title }}</h2>
+                    <h2 style="color:red">{{ item.forcell_products.product_name}}</h2>
                     <p style= "margin-top: 16px">Quantity : {{item.quantity}}</p><br>
-                    <p>$ {{item.forcell_products.product_price ? item.forcell_products.product_price * item.quantity : item.forcell_products.line_subtotal * item.quantity}}</p>
+                    <p>$ {{item.forcell_products.product_price * item.quantity}}</p>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -123,7 +123,7 @@
             </ion-col>
             <ion-col>
               <div (mouseover)= "checkout()">
-                <form ngNoForm (submit)="formSubmit($event)" action=" http://revmax.twinspark.co/add-product/" target="_self" method="POST">
+                <form ngNoForm (submit)="formSubmit($event)" action=" https://revmax.twinspark.co/add-product/" target="_self" method="POST">
                   <input type= "hidden" name="q" [(ngModel)]="cartString" value="cartString">
                   <button id="formCartSubmit" [disabled]="!cartString" ion-button color="danger" block>Checkout</button>
                 </form>

@@ -26,9 +26,11 @@ import { AlertController } from 'ionic-angular';
 })
 export class ProductDetailPage {
   public postReviewData: any = {
+    "rating": "",
     "userName": "",
     "userEmail" : "",
-    "userContent" : ""};
+    "userContent" : "",
+  };
   variable: any;
   title: any;
   name: any;
@@ -93,7 +95,7 @@ export class ProductDetailPage {
           
         }
         console.log(this.product);
-        // this.instalationIns = this.product.installation_instruction;   
+        this.instalationIns = this.product.installation_instruction;   
         this.header =  'description'; 
         this.productName = this.product.slug;
         console.log(this.productName);
@@ -152,8 +154,6 @@ export class ProductDetailPage {
                 console.log('Cancel clicked');
                  /* Check for variations */
                 if(this.isVariation == true && (this.variationId == null || typeof this.variationId == "undefined")){
-                  // alert("Please select all the variations.");
-                  console.log("Please select all the variations.")
                   const alert = this.alertCtrl.create({
                     title: 'Select Variations',
                     subTitle: 'Please select all the variations.',
@@ -177,9 +177,6 @@ export class ProductDetailPage {
             {
               text: 'Show me the upgrades',
               handler: () => {
-                // this.modalCtrl.create('upgrade-products', {
-                //   'upsellIds':this.product.upsell_ids
-                // }).present();
                 this.upgradeProduct();
                 console.log('show upgrades');
               }
@@ -211,7 +208,6 @@ export class ProductDetailPage {
       if (this.selectedUpsellProducts.length && (this.selectedUpsellProducts.length == this.product.upsell_product_info.length)) {
         /* Check for variations */
         if (this.isVariation == true && (this.variationId == null || typeof this.variationId == "undefined")) {
-          // alert("Please select all the variations.");
           console.log("Please select all the variations.");
           const alert = this.alertCtrl.create({
             title: 'Select Variations',
@@ -230,12 +226,6 @@ export class ProductDetailPage {
         buttons: ['Ok']
       });
       alert.present();
-       /* Check for variations */
-    // if(this.isVariation == true && this.variationId != null && typeof this.variationId != "undefined"){
-    //   alert("Please select all the variations.");
-    // }else{
-    //   this.addProductToStorage(product);
-    // }
     } else {
       this.addProductToStorage(product);
     }
@@ -251,7 +241,7 @@ export class ProductDetailPage {
           // "product": product,
           "name": product.name,
           "quantity": 1,
-          "image": product.images[0],
+          "image": product.images[0].src,
           "price": parseFloat(product.price),
           "amount": parseFloat(product.price),
           "product_id": product.id,
@@ -276,7 +266,7 @@ export class ProductDetailPage {
             // "product": product,
             "name": product.name,
             "quantity": 1,
-            "image": product.images[0],
+            "image": product.images[0].src,
             "price": parseFloat(product.price),
             "amount": parseFloat(product.price),
             "product_id": product.id,
@@ -301,7 +291,7 @@ export class ProductDetailPage {
                   // "product": upsell,
                   "name": upsell.name,
                   "quantity": 1,
-                  "image": product.images[0],
+                  "image": product.images[0].src,
                   "price": parseFloat(upsell.price),
                   "amount": parseFloat(upsell.price),
                   "product_id": upsell.id,
@@ -397,6 +387,7 @@ export class ProductDetailPage {
       .subscribe((response) => {
         console.log('success in posting');
         console.log(response);
+        this.postReviewData= {};
         const alert = this.alertCtrl.create({
           title: 'Success',
           subTitle: response,
@@ -406,8 +397,9 @@ export class ProductDetailPage {
       },
       (error) => {
         console.log('in error');
-        console.log('error in pposting');
+        console.log('error in posting');
         console.log(error);
+        this.postReviewData = {};
         const alert = this.alertCtrl.create({
           title: 'Error',
           subTitle: "Not able to post. Try next time",

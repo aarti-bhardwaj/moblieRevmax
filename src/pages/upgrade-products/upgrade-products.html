@@ -41,7 +41,7 @@
       </ion-card-content>  
     </ion-card>
   </ng-container>
-  <button ion-button color="danger" outline block (click)="closeModal()">Back</button>
+  <button *ngIf = "allProducts" ion-button color="danger" outline block (click)="closeModal()">Back</button>
 </ion-content>
 
 <!-- <ion-footer *ngIf = "allProducts">

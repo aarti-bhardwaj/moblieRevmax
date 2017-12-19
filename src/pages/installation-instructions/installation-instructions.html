@@ -12,15 +12,18 @@
 
 </ion-header>
 
+<ion-content class="card-background-page">
 
-<ion-content scroll="true" overflow-scroll="true" padding>
-  <ion-item>
-    Installation Instruction<br>
-    <!-- <p [innerHTML]="instructions"></p>  -->
-    <!-- <iframe [src]="instructions"></iframe> -->
-    <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(instructions)' style="width:100%;height:300%"
-      >
-    </iframe>
-</ion-item>
-<button ion-button color="danger" outline block (click)="closeModal()">Back</button>
+  <ion-card>
+    <img [src]="instructions" />
+    
+  </ion-card>
+
+
 </ion-content>
+
+<ion-footer>
+  <button ion-button color="danger" outline block (click)="closeModal()">Back</button>
+  
+</ion-footer>
+

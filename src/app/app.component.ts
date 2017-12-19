@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppConfigurationProvider as AppConfig } from '../providers/configuration/app-configuration';
@@ -22,7 +22,7 @@ export class MyApp {
   pages:any;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,private appConfig: AppConfig,
-    private _app: App, private _ionicApp: IonicApp, private _menu: MenuController, public storage: Storage
+    private _app: App, private _ionicApp: IonicApp, private _menu: MenuController, public storage: Storage, public modalCtrl: ModalController,
   ) {
     this.parseMenu();
     // this.fetchProductsfromWebCart();
@@ -48,6 +48,15 @@ export class MyApp {
     });
  
   }
+
+  home(){
+    this.nav.setRoot('dashboard');
+  }
+
+  openCart() {
+    this.modalCtrl.create('cart').present();
+  }
+
   parseMenu(){
     this.appConfig.fetchMenuItems()
     .subscribe((response) => {

@@ -8,6 +8,9 @@
   
   <ion-content class="masters">
     <ion-list color="dark">
+      <ion-item color="dark" text-wrap>
+        <span menuToggle tappable (click)="home()">Home</span>
+      </ion-item>
       <ion-item color="dark" *ngFor="let p of pages; let i=index" text-wrap tappable (click)="toggleLevel1('idx'+i)" [ngClass]="{active: isLevel1Shown('idx'+i)}">
         <span>
           {{p.title}}
@@ -33,6 +36,9 @@
             </ion-list>
           </ion-item>
         </ion-list>
+      </ion-item>
+      <ion-item color="dark" text-wrap>
+        <span menuToggle tappable (click)="openCart()">Cart</span>
       </ion-item>
       <ion-item color="dark" text-wrap>
         <span menuToggle tappable (click)="helpfulLinks()">Helpful Links</span>

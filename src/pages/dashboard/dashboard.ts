@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RevmaxProvider as Revmax } from '../../providers/revmax';
-import { AppConfigurationProvider as AppConfig } from '../../providers/configuration/app-configuration';
-
-
 
 /**
  * Generated class for the DashboardPage page.
@@ -23,20 +20,12 @@ import { AppConfigurationProvider as AppConfig } from '../../providers/configura
   templateUrl: 'dashboard.html',
 })
 export class DashboardPage {
-  data(arg0: any): any {
-    throw new Error("Method not implemented.");
-  }
-  searchCat: any;
   products: any;
-  pages: any;
-  response: any;
-  product: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public Revmax: Revmax, 
-    private appConfig: AppConfig,         
+  constructor(public navCtrl: NavController, public navParams: NavParams, public Revmax: Revmax       
     ) {
     this.dashboard();
-    this.fetchCart();
+    
   }
 
   dashboard(){
@@ -56,20 +45,6 @@ export class DashboardPage {
     });
   }
   
-  fetchCart(){
-    this.appConfig.fetchCartItems()
-      .subscribe((response) => {
-        
-        console.log('success in getting cart items');
-        console.log(response);
-      },
-      (error) => {
-        console.log('in error');
-        console.log('error in getting cart items');
-        console.log(error);
-
-      });
-  }
   
 
 }

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController, ToastController } 
 import { RevmaxProvider as Revmax } from '../../providers/revmax';
 import { AlertController } from 'ionic-angular';
 import { App } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 import { AppConfigurationProvider as AppConfig } from '../../providers/configuration/app-configuration';
 
 /**
@@ -21,6 +22,7 @@ import { AppConfigurationProvider as AppConfig } from '../../providers/configura
   templateUrl: 'search-products.html',
 })
 export class SearchProductsPage {
+  loader: any;
   catSlug: any;
   products: any;
   recievedData: any;
@@ -42,25 +44,13 @@ export class SearchProductsPage {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     private appConfig: AppConfig,
+    public loadingCtrl: LoadingController,
     public app: App
     ) {
     this.productCategories = this.Revmax.searchedCategories;
     console.log('these are the categories from provider');
     console.log(this.productCategories);
-    // this.actualProductCategories.forEach((singleProduct, index) => {
-      
-    //   var data = {
-    //     id: singleProduct.id,
-    //     slug: singleProduct.slug,
-    //     name: singleProduct.name,
-
-    //   };
-    //   this.productCategories.push(data);
-   
-      
-    //   console.log("these are the modified categories");
-    //   console.log(this.productCategories);
-    // })
+  
     this.refreshFlag = true;
     this.productCatResponse = this.navParams.get("category");
     this.attributeResponse = this.navParams.get("attResponse");
@@ -103,6 +93,7 @@ export class SearchProductsPage {
   }
 
   getProductAttribute(){
+    this.presentLoading();
     if (typeof this.productCatResponse != "undefined" && this.productCatResponse != null){
       for (let i = 0; i < this.productCategories.length; i++) {
         if (this.productCatResponse == this.productCategories[i].id) {
@@ -123,25 +114,22 @@ export class SearchProductsPage {
             this.recievedData.catTitle = this.productCatSlug;
           }
           console.log(this.recievedData);
+          this.loader.dismiss();
           this.viewCtrl.dismiss(this.recievedData);
         },
         (error) => {
+          this.loader.dismiss();
+          const alert = this.alertCtrl.create({
+            title: 'Error',
+            subTitle: 'Error in getting variations for this product.',
+            buttons: ['Ok']
+          });
+          alert.present();
           console.log('in error');
           console.log('error in getting variations for this product');
           console.log(error);
 
         });
-
-
-
-      // this.Revmax.searchResult(this.productCatResponseId, this.attributeResponse);
-      // this.Revmax.getDataSubject.subscribe((val) => {
-      // this.recievedData = val.searchResult;
-      // console.log("this is the filtered data");
-      // console.log(this.recievedData);
-      // this.recievedData.attResponse = this.attributeResponse;
-      // this.viewCtrl.dismiss(this.recievedData);
-      // });
      
     }else{
       const alert = this.alertCtrl.create({
@@ -162,5 +150,11 @@ export class SearchProductsPage {
     console.log(this.attributeResponse)
   }
 
+  presentLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Loading...",
+    });
+    this.loader.present();
+  }
   
 }

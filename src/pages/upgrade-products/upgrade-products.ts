@@ -25,7 +25,6 @@ import { Storage } from '@ionic/storage';
 export class UpgradeProductsPage {
   checkUpsells: Array<any> =[];
   public product;
-  loader: any;
   upsellIdArray: any;
   allProducts: any;
   selectedUpsellProducts: Array<any> =[];
@@ -43,8 +42,12 @@ export class UpgradeProductsPage {
     this.checkUpsells = this.navParams.get("checkUpsells");
     console.log('check upsells');
     console.log(this.upsellIdArray);
-    this.Revmax.products = {};
     this.Revmax.fetchProducts(this.upsellIdArray);
+    let loader = this.loadingCtrl.create({
+      content: "Loading...",
+      duration: 3000
+    });
+    loader.present();
     this.Revmax.getDataSubject.subscribe((val)=>{
       console.log('in subs of product detail');
       this.allProducts = val.allProducts; 
@@ -71,10 +74,4 @@ export class UpgradeProductsPage {
     }).present();
   }
 
-  presentLoading() {
-    this.loader = this.loadingCtrl.create({
-      content: "Loading...",
-    });
-    this.loader.present();
-  }
 }

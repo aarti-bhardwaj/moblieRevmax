@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Search</ion-title>
+    <ion-title>Filter Products</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="refresh()">
             <ion-icon name="refresh-circle"></ion-icon>
@@ -18,7 +18,8 @@
 
 
 <ion-content>
-
+      <button ion-button color="#E2E0DF" icon-left block (click)="refresh()">
+        Clear Filter</button>
       <ion-item *ngIf = "productCatResponse">
         <ion-label stacked>Product Categories</ion-label>
         <ion-select [(ngModel)]="productCatResponse" name="productCat" (ngModelChange)="getProductCategory($event)">
